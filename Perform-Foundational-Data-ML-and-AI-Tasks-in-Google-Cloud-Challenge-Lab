@@ -1,5 +1,7 @@
 ******************************************************************************************************************************
+To Run Data Flow Job:-
 
+gcloud dataflow jobs run lab-job --gcs-location gs://dataflow-templates-us-central1/latest/Stream_GCS_Text_to_BigQuery --region us-central1 --num-workers 2 --staging-location gs://qwiklabs-gcp-00-2a3131cbc536/temp --parameters javascriptTextTransformGcsPath=gs://cloud-training/gsp323/lab.js,JSONPath=gs://cloud-training/gsp323/lab.schema,javascriptTextTransformFunctionName=transform,outputTable=qwiklabs-gcp-00-2a3131cbc536:lab.customers,inputFilePattern=gs://cloud-training/gsp323/lab.csv,bigQueryLoadingTemporaryDirectory=gs://qwiklabs-gcp-00-2a3131cbc536/bigquery_temp
 
 gsutil cp gs://cloud-training/gsp323/lab.csv .
 
