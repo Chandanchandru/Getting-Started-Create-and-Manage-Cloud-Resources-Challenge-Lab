@@ -1,4 +1,7 @@
 ****************************************************************Ensure Access & Identity in Google Cloud: Challenge Lab*************************************************************
+
+###############################################################################################
+
 Task 1: Create a custom security role.
 
 Execute this command on cloud shell to create yaml file for custom role:
@@ -39,7 +42,7 @@ gcloud iam roles create orca_storage_update --project $DEVSHELL_PROJECT_ID \
 
 --file role-definition.yaml
 
-###############################################################################################
+#################################################################################################
 
 Task 2: Create a service account.
 
@@ -47,6 +50,8 @@ gcloud iam service-accounts create orca-private-cluster-sa --display-name "my se
 
 
 gcloud alpha projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member serviceAccount:orca-private-cluster-sa@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com --role "projects/<projectid>/roles/orca_storage_update"
+
+################################################################################################
 
 
 Task 3: Bind a custom security role to a service account
@@ -62,12 +67,17 @@ Add Another Role and Select -> Monitoring -> Monitoring Viewer
 Add Another Role and Select -> Logging -> Logs Writer
 then Click Continue and then click Done
 
+##########################################################################################################
+
 
 Task 4: Create and configure a new Kubernetes Engine private cluster
 
 ---------------In the command replace the project id-----------------------
 
 gcloud container clusters create orca-test-cluster --num-nodes 1 --master-ipv4-cidr=172.16.0.64/28 --network orca-build-vpc --subnetwork orca-build-subnet --enable-master-authorized-networks  --master-authorized-networks 192.168.10.2/32 --enable-ip-alias --enable-private-nodes --enable-private-endpoint --service-account orca-private-cluster-sa@<Project ID>.iam.gserviceaccount.com --zone us-east1-b
+
+
+#########################################################################################################
 
 
 Task 5: Deploy an application to a private Kubernetes Engine cluster
