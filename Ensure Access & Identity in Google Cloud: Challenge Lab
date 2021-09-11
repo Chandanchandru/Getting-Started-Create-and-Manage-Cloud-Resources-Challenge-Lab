@@ -83,9 +83,14 @@ gcloud container clusters create orca-test-cluster --num-nodes 1 --master-ipv4-c
 Task 5: Deploy an application to a private Kubernetes Engine cluster
 
 
+---------------------In The SSH of the orca-jumphost Run the Next Commands------------
+
+Navigation Menu -> Compute Engine -> VM Instances -> open the SSH of "orca-jumphost" Instance and Paste the below commands 
+
+
 gcloud config set compute/zone us-east1-b
 
-
+---------------------------------- Replace <Project ID> With your Project ID 1 -------------------------------
 
 gcloud container clusters get-credentials orca-test-cluster --internal-ip --zone us-east1-b --project <Project ID>
 
@@ -98,7 +103,7 @@ kubectl expose deployment hello-server --name orca-hello-service \
     --type LoadBalancer --port 80 --target-port 8080
 
 
-
+##########################################################################################################
 
 
 
