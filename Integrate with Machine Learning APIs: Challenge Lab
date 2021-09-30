@@ -13,6 +13,7 @@ gsutil cp gs://$DEVSHELL_PROJECT_ID/analyze-images.py .
 ****************************************************************************************************************************************************************************
 Task 3 :
 
+--------------------Open Editor in cloud shell and open it in new window and erase all the full contents of the file and copy paste the below code---------------------- 
 
 # DONT CHANGE ANYTHING
 
