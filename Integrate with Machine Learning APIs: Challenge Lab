@@ -1,0 +1,71 @@
+#######################################################  Integrate with Machine Learning APIs: Challenge Lab   ##############################################################
+
+export SANAME=ml-api-integration
+gcloud iam service-accounts create $SANAME
+
+________
+If not allowed then run
+
+gcloud auth login
+
+Then verify... and again run the above command
+________
+
+gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member=serviceAccount:$SANAME@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com --role=roles/bigquery.admin
+
+gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member=serviceAccount:$SANAME@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com --role=roles/storage.admin
+
+gcloud iam service-accounts keys create sa-key.json --iam-account $SANAME@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com
+
+export GOOGLE_APPLICATION_CREDENTIALS=${PWD}/sa-key.json
+gsutil cp gs://$DEVSHELL_PROJECT_ID/analyze-images.py .
+
+__________
+Now we completed Task 1 & + Task 2 
+__________
+
+
+
+nano analyze-images.py
+
+#TBD : create vision APS..
+
+from google.cloud import vision
+import io
+client = vision.ImageAnnotatorClient()
+
+
+#TBD - Detect text..
+
+image = vision.Image(content=file_content)  
+response = client.text_detection(image=image)
+
+#TBD - for non EN...
+
+from google.cloud import translate_v2 as translate 
+client = translate.Client()
+translation = translate_client.translate(text_data, target_language = 'en')
+
+#TBD - when script is work...
+errors = bq_client.insert_rows(table, row_for_bq) 
+assert errors == []  《《 this is pre-written 》》
+
+Ctrl+X  =》 Y  =》 Enter
+
+python3 analyze-images.py $DEVSHELL_PROJECT_ID $DEVSHELL_PROJECT_ID
+
+
+_______
+Third checkpoint complete
+Fourth as well
+________
+
+
+Copy and paste the following query into the Query editor, then Run query
+
+SELECT locale, COUNT(locale) as OCCURENCE FROM `<QWIKLABS_PROJECT_ID>.image_classification_dataset.image_text_detail` GROUP BY locale
+
+P.S : Replace <QWIKLABS_PROJECT_ID>with your project ID.
+
+
+#################################################################################################################################################################################
