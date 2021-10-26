@@ -16,6 +16,8 @@ Query 1: Build a query that will answer - What was the total count of confirmed 
 
 SELECT sum(cumulative_confirmed) as total_cases_worldwide FROM `bigquery-public-data.covid19_open_data.covid19_open_data` where date='2020-04-15'
 
+
+###############################################################################################################################################################################
 Query 2: Worst Affected Areas    
 
 Query 2: Build a query for answering - How many states in the US had more than 100 deaths on Apr 10, 2020? The query needs to list the output in the field - count_of_states.
