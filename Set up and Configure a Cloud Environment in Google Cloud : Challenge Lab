@@ -9,6 +9,17 @@
 For this task because it is mentioned to develop manually .....
 We will perform it manually
 
+Task 1: Create development VPC manually
+Create a VPC called griffin-dev-vpc with the following subnets only:
+
+griffin-dev-wp
+IP address block: 192.168.16.0/20
+
+griffin-dev-mgmt
+IP address block: 192.168.32.0/20
+
+Click Check my progress to verify the objective.
+Create development VPC manually
 
 
 ******************************************************************************************************************************
@@ -135,9 +146,7 @@ again next
 
 create
 
-8th checkpoint compete
-
-Task 9
+--------------------------------------Task 9----------------------------------
 
 Navi > IAM & Admin > IAM
 press Add+
@@ -145,5 +154,9 @@ copy paste username
 new member = username
 Role = Editor
 Save
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
 
 
