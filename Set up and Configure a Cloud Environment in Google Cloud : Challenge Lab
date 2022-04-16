@@ -105,6 +105,45 @@ kubectl create -f wp-deployment.yaml
 kubectl create -f wp-service.yaml
 
 
+----------------------------------------------------------------------------------------
 
+
+now on navigation > kubernetes Engine > service and Ingress
+click on wordpress
+click on external endpoints 
+it will redirect to wordpress account
+{i.p}/wp-admin/install.php
+
+
+-------------------------------------------------Task 8 ----------------------------------------------
+
+Navigation > monitoring > overview
+
+LHS click on uptime check
+
+create uptime check
+title = WordPress Uptime
+Protocol = HTTP
+Host Name = {i.p address} 
+Path = /
+
+next
+
+then test
+
+again next
+
+create
+
+8th checkpoint compete
+
+Task 9
+
+Navi > IAM & Admin > IAM
+press Add+
+copy paste username
+new member = username
+Role = Editor
+Save
 
 
