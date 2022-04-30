@@ -1,0 +1,44 @@
+------------------------------------------------------------Deploy a Compute Instance with a Remote Startup Script------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Task 1:
+ 
+Create a storage bucket
+ 
+gsutil mb gs://$DEVSHELL_PROJECT_ID
+ 
+Upload startup script in storage bucket
+ 
+gsutil cp gs://sureskills-ql/challenge-labs/ch01-startup-script/install-web.sh gs://$DEVSHELL_PROJECT_ID
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Task 2:
+ 
+Create GCE instance with startup load for storage
+ 
+gcloud compute instances create example-instance --zone us-central1-a --tags http-server --metadata startup-script-url=gs://$DEVSHELL_PROJECT_ID/install-web.sh
+ 
+ 
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Task 3:
+ 
+Create Firewall rule to allow HTTP/tcp:80 traffic
+ 
+gcloud compute firewall-rules create allow-http --target-tags http-server --source-ranges 0.0.0.0/0 --allow tcp:80
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Task 4:
+ 
+Connect to the server ip-address using HTTP
+ 
+Open new tab and enter http://[External_IP]
+ 
+Replace [External_IP] with External IP address of the Compute Engine instance created in Task 2
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
