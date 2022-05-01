@@ -11,13 +11,20 @@ Task 1 : Create a Compute Engine instance, add necessary firewall rules.
 
 Create a Linux VM Instance
 
-Create a Linux virtual machine, name it "apache" and specify the zone as "us-central1-a".
-
-Enable Public Access to VM Instance
+Create a Linux virtual machine Instance , 
+Name: as mentioned on the lab instruction page
+Region: as mentioned on the lab instruction page
 
 Click on Checkbox Of Allow HTTP Traffic
 
-While creating the Linux instance, make sure to apply the appropriate firewall rules so that potential customers can find your new product.
+Click on create
+
+Enable Public Access to VM Instance
+
+In cloud shell Paste the Below commands
+
+
+gcloud compute firewall-rules create allow-http --target-tags http-server --source-ranges 0.0.0.0/0 --allow tcp:80
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -28,14 +35,10 @@ Task 2 : Configure Apache2 Web Server in your instance
 Use these commands in SSH :
 
 
-sudo su -
+sudo apt-get update
 
-
-apt-get install apache2 -y
-
-
-service --status-all
-
+ 
+sudo apt-get install apache2 -y
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -43,7 +46,7 @@ Task 3 : Test your server
 
 ---------------------------------------------------------------------
 
-Check External IP or this task is automatically done.
+Click On External IP of the VM instance or this task is automatically done.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                                                                          
