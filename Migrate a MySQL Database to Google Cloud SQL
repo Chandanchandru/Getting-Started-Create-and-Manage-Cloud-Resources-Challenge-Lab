@@ -1,0 +1,60 @@
+Migrate a MySQL Database to Google Cloud SQL:-
+ -------------------------------------------------------------------------------------------------------------------------------
+The first set of commands can be run from the Cloud shell or the blog host.
+export ZONE=us-central1-a
+-----------------------------------------------------------------
+Create Cloud SQL instance
+gcloud sql instances create wordpress --tier=db-n1-standard-1 --activation-policy=ALWAYS --gce-zone $ZONE
+-------------------------------------------------------------------------
+Set root password for that instance
+gcloud sql users set-password --host % root --instance wordpress --password Password1*
+--------------------------------------------------------------------------
+Get an external IP-address of blog compute instance from console (Replace IP with the value of your "blog" VM instance's external IP)
+export ADDRESS=<external IP of blog vm/32>
+-----------------------------------------------------------------
+ 
+ 
+Authorize network access to Cloud SQL
+gcloud sql instances patch wordpress --authorized-networks $ADDRESS --quiet
+--------------------------------------------------------------------------
+ 
+ssh into blog vm
+gcloud compute ssh blog --zone=us-central1-a
+------------------------------------------------------------
+Get IP-address of a Cloud SQL instance
+MYSQLIP=$(gcloud sql instances describe wordpress --format="value(ipAddresses.ipAddress)")
+---------------------------------------------------------------------------------
+ 
+mysql --host=[SQL INSTANCE IP] \
+   --user=root --password
+   
+           or
+mysql --host=$MYSQLIP \
+   --user=root --password   
+   
+ --------------------------------------------------------------------
+Create wordpress db and users on Cloud SQL instance manually via the GCP console or use this as a SQL script
+CREATE DATABASE wordpress;
+CREATE USER 'blogadmin'@'%' IDENTIFIED BY 'Password1*';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'blogadmin'@'%';
+FLUSH PRIVILEGES;
+-------------------------------------------------
+exit
+--------------------------------------------------------------------------------
+Create a backup of the running wp database from the local mysqlinstance on the blog vm
+sudo mysqldump -u root -pPassword1* wordpress > wordpress_backup.sql
+-------------------------------------------------------------------------------------------------------------
+ 
+Restore this to Cloud SQL
+mysql --host=$MYSQLIP --user=root -pPassword1* --verbose wordpress < wordpress_backup.sql
+ 
+----------------------------------------------------------------------------------------
+Restart apache.
+sudo service apache2 restart
+---------------------------------------------------------------------------
+cd /var/www/html/wordpress
+----------------------------------------------------------------------------
+sudo nano wp-config.php
+Replace the localhost with the SQL instance IP
+
+----------------------------------------------------------------------------------------------------
