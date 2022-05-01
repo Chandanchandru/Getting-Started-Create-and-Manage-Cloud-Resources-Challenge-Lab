@@ -1,0 +1,31 @@
+Scale Out and Update a Containerized Application on a Kubernetes Cluster
+
+
+1. Download application tar for the lab
+gsutil cp gs://sureskills-ql/challenge-labs/ch05-k8s-scale-and-update/echo-web-v2.tar.gz .
+
+2. Unzip the tar file
+tar xvzf echo-web-v2.tar.gz
+
+3. Build image in the lab
+gcloud builds submit --tag gcr.io/$DEVSHELL_PROJECT_ID/echo-app:v2 .
+
+4. Push image to container registry
+gcloud docker -- push gcr.io/$DEVSHELL_PROJECT_ID/echo-app
+
+OR
+
+docker push gcr.io/$DEVSHELL_PROJECT_ID/echo-app
+
+5. Authorize cloud shell to access Kubernetes cluster
+gcloud container clusters get-credentials echo-cluster --zone us-central1-a
+
+6. Edit echo-web deployments
+kubectl edit deploy echo-web
+
+7. Change container image to v2 from v1
+
+8. Scale replicas
+kubectl scale deploy echo-web --replicas=2
+
+
