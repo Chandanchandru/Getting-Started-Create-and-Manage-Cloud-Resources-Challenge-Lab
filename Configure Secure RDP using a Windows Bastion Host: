@@ -41,17 +41,18 @@ Ip : 0.0.0.0/0
 check tcp : 3389
 
 Create
- 
-Task 5:
- 
+----------------------------------------------------------------------------------------
+Task 5:  Create VM Instance
+
 VM instance :
 create Instance 
 
 Name : vm-bastionhost
-Series : e2
+Series : n1-standard-2
 Boot disk : Windows Server
 Version : 2016 datacenter
 standard persistance disk
+size = 150
 
 Allow HTTP
 
@@ -60,30 +61,35 @@ network tag : rdp
 network interface : securenetwork
 
 done
+
 add new
 
 leave default
-just change ext ip : none
+just change external ip : none
 
 create
-------------------------------------------------------------------------
+-------------------------------------------------
 name : vm-securehost
-Series : e2
+Series : n1-standard2
 Boot disk : Windows Server
 Version : 2016 datacenter
 standard persistance disk
+size = 150
 
 Allow HTTP
 
 Networking
 network tag : rdp
 network interface : securenetwork
+External Ip : None
+add Network Interface 
+network interface : default
+External Ip : None
 
 done
-add new
 
-leave default
-just change ext ip : none
+create
+
 ------------------------------------------------------------------------------ 
 Task 6:
  
@@ -95,7 +101,7 @@ After this you will get credentials to connect with RDP please connect with RDP
  
 gcloud compute reset-windows-password vm-securehost --user app_admin --zone us-central1-a
  
-Connect with the rdp y using the values you got from previous commands
+Connect with the rdp of bastion vm by using the values you got from previous commands
 Open the Server Manager in your VM
 Click on Add roles and features
 Click on Next
