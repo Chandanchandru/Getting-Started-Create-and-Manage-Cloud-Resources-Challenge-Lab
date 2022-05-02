@@ -1,0 +1,82 @@
+Monitor and Log with Google Cloud Operations Suite: Challenge Lab
+
+Task 1: Configure Cloud Monitoring
+Go to Navigation Menu >  Monitoring
+Click on Dashboards
+Search for “Media_Dashboard”
+
+
+
+Task 2: Configure a Compute Instance to generate Custom Cloud Monitoring metrics
+ 
+Go to Compute Engine > VM instance
+Stop the video-queue-monitor-vm
+Click on edit icon of the VM
+In the Custom Metadata section < Startup script
+Replace the Project ID
+Replace the Instance ID (You will see it by scrolling the VM edit page)
+Replace the Vm instance zone  ( us-east1-b)
+Click Save
+Start the VM by clicking on Play icon
+Wait for few minutes and check for score
+Note: Please note down the instance ID you will require later.
+
+
+
+
+Task 3: Create a custom metric using Cloud Operations logging events
+ 
+Navigation Menu > Logging
+Click on Logs Explorer
+In the Options > Go back to the legacy logs viewer
+In the Filter by label or text search field < select the dropdownarrow and select Convert to advanced field
+In the Filter by label or text search field enter the value textPayload=~"file_format\: ([4,8]K).*" and click on Submit Filter
+Click on Create metric field
+Add the metric name as: < AS GIVEN IN THE LAB INSTRUCTION >
+ filter : textPayload=~"file_format\: ([4,8]K).*"
+Click Create Metric
+
+
+
+
+Task 4: Add custom metrics to the Media Dashboard in Cloud Operations Monitoring
+ 
+Navigation menu > Monitoring > dashboards
+Click on Media Dashboard > click on Add chart
+Resource Type: select the gce_instance
+Metric: select the custom.googleapis.com/opencensus/my.videoservice.org/measure/input_queue_size
+In the filter section select the instance ID and add the value of the instance id which you noted previously for the video-queue-monitor-vm instance
+Click on the save button
+
+Again click on the add chart for second second metrics
+In the metric type select: logging.googleapis.com/user/large_video_upload_rate
+Keep the other value as default ( Do not select resource type )
+Click the save button.
+
+
+
+
+Task 5: Create a Cloud Operations alert based on the rate of high resolution video file uploads
+ 
+Click on alerting
+Click on create policy > Add condition
+In the metric select: logging.googleapis.com/user/large_video_upload_rate
+In the configuration
+Condition: is above
+Threshold: 3
+For 3 Minutes
+Click on Add
+Click Next
+In the Policy name add the name as: “High resolution video file uploads”
+Click create
+
+
+
+
+
+
+
+
+
+
+
