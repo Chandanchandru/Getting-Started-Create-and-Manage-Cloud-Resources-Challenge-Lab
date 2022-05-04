@@ -38,21 +38,19 @@ Click Create Metric
 
 
 
-
 Task 4: Add custom metrics to the Media Dashboard in Cloud Operations Monitoring
  
 Navigation menu > Monitoring > dashboards
 Click on Media Dashboard > click on Add chart
 Resource Type: select the gce_instance
-Metric: select the custom.googleapis.com/opencensus/my.videoservice.org/measure/input_queue_size
+Metric: select the custom.googleapis.com/opencensus/my.videoservice.org/measure/< AS GIVEN IN THE LAB INSTRUCTION >
 In the filter section select the instance ID and add the value of the instance id which you noted previously for the video-queue-monitor-vm instance
 Click on the save button
 
 Again click on the add chart for second second metrics
-In the metric type select: logging.googleapis.com/user/large_video_upload_rate
+In the metric type select: logging.googleapis.com/user/< AS GIVEN IN THE LAB INSTRUCTION >
 Keep the other value as default ( Do not select resource type )
 Click the save button.
-
 
 
 
@@ -60,10 +58,10 @@ Task 5: Create a Cloud Operations alert based on the rate of high resolution vid
  
 Click on alerting
 Click on create policy > Add condition
-In the metric select: logging.googleapis.com/user/large_video_upload_rate
+In the metric select: logging.googleapis.com/user/< AS GIVEN IN THE LAB INSTRUCTION >
 In the configuration
 Condition: is above
-Threshold: 3
+Threshold: < AS GIVEN IN THE LAB INSTRUCTION >
 For 3 Minutes
 Click on Add
 Click Next
@@ -72,7 +70,7 @@ Click create
 
 
 
-
+*********************************************************************************************************************************************************************
 
 
 
