@@ -1,0 +1,167 @@
+
+Serverless Cloud Run Development: Challenge Lab
+
+------------------------------------------------------------------------------------------------------------------------------
+Open the cloud shell and Run the commands one by one:
+
+gcloud config set project \
+  $(gcloud projects list --format='value(PROJECT_ID)' \
+  --filter='qwiklabs-gcp')
+
+gcloud config set run/region us-central1
+
+gcloud config set run/platform managed
+
+git clone https://github.com/rosera/pet-theory.git && cd pet-theory/lab07
+
+----------------------------------------------------------------------------------------------------------------------------------
+Task 1: Enable a Public Service
+
+Run these commands:
+
+cd unit-api-billing
+gcloud builds submit --tag gcr.io/[PROJECT_ID]/billing-staging-api:0.1
+gcloud run deploy --image gcr.io/[PROJECT_ID]/billing-staging-api:0.1
+
+*********************************************************************************************************************************
+
+NOTE :- For the Service name (billing-staging-api):, enter: < THE LAB GIVEN VALUES >
+If it is asking for the "you like to enable and retry (this will take a few minutes)?" prompt, press y and hit Enter
+If prompt for “you like to enable and retry (this will take a few minutes)? (y/N)?”, press  y and hit Enter
+If prompt for the region, select the option of us-central1
+If prompt for the "Allow unauthenticated invocations to [netflix-dataset-service] (y/N)?" prompt, press y and hit Enter.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+Task-2:
+
+Run these commands:
+cd ..
+cd staging-frontend-billing
+gcloud builds submit --tag gcr.io/[PROJECT_ID]/frontend-staging:0.1
+gcloud run deploy --image gcr.io/[PROJECT_ID]/frontend-staging:0.1
+
+*********************************************************************************************************************************
+
+NOTE :- For the Service name (frontend-staging):, enter: < THE LAB GIVEN VALUES >
+If it is asking for the "you like to enable and retry (this will take a few minutes)?" prompt, press y and hit Enter
+If prompt for “you like to enable and retry (this will take a few minutes)? (y/N)?”, press  y and hit Enter
+If prompt for the region, select the option of us-central1
+If prompt for the "Allow unauthenticated invocations to [netflix-dataset-service] (y/N)?" prompt, press y and hit Enter.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+Task 3: Deploy a Private Service
+
+Run these commands:
+cd ..
+cd staging-api-billing
+
+Go to Navigation menu > Cloud Run. 
+Delete the service named as: public-billing-service
+
+Return to the cloud shell window and execute these commands:
+
+gcloud builds submit --tag gcr.io/[PROJECT_ID]/billing-staging-api:0.2
+gcloud run deploy --image gcr.io/[PROJECT_ID]/billing-staging-api:0.2
+
+*********************************************************************************************************************************
+
+NOTE :- For the Service name (billing-staging-api):, enter:< THE LAB GIVEN VALUES >
+If it is asking for the "you like to enable and retry (this will take a few minutes)?" prompt, press y and hit Enter
+If prompt for “you like to enable and retry (this will take a few minutes)? (y/N)?”, press  y and hit Enter
+If prompt for the region, select the option of us-central1
+If prompt for the "Allow unauthenticated invocations to [netflix-dataset-service] (y/N)?" prompt, press y and hit Enter.
+*********************************************************************************************************************************
+
+export BILLING_SERVICE=private-billing-service
+
+BILLING_URL=$(gcloud run services describe $BILLING_SERVICE \
+  --platform managed \
+  --region us-central1 \
+  --format "value(status.url)")
+
+curl -X get -H "Authorization: Bearer $(gcloud auth print-identity-token)" $BILLING_URL
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Task 4: Create a Billing Service Account
+
+Go to Navigation menu > IAM & Admin > Service accounts
+Click on Create Service account.
+Give name as: billing-service-sa
+
+Accept all the default values and click on Done.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Task 5: Deploy the Billing Service
+
+execute these commands in Cloud shell:
+
+cd ..
+cd prod-api-billing
+
+gcloud builds submit --tag gcr.io/[PROJECT_ID]/billing-prod-api:0.1
+gcloud run deploy --image gcr.io/[PROJECT_ID]/billing-prod-api:0.1 --service-account billing-service-sa
+
+*********************************************************************************************************************************
+
+NOTE :- For the Service name (billing-staging-api):, enter:< THE LAB GIVEN VALUES >
+If it is asking for the "you like to enable and retry (this will take a few minutes)?" prompt, press y and hit Enter
+If prompt for “you like to enable and retry (this will take a few minutes)? (y/N)?”, press  y and hit Enter
+If prompt for the region, select the option of us-central1
+If prompt for the "Allow unauthenticated invocations to [netflix-dataset-service] (y/N)?" prompt, press y and hit Enter.
+
+*********************************************************************************************************************************
+
+export PROD_BILLING_SERVICE=billing-prod-service
+
+PROD_BILLING_URL=$(gcloud run services \
+  describe $PROD_BILLING_SERVICE \
+  --platform managed \
+  --region us-central1 \
+  --format "value(status.url)")
+
+curl -X get -H "Authorization: Bearer \
+  $(gcloud auth print-identity-token)" \
+  $PROD_BILLING_URL
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+Task 6: Frontend Service Account
+
+
+Go to Navigation menu > IAM & Admin > Service accounts
+Click on Create Service account.
+Give name as: frontend-service-sa
+Give the Role: Cloud Run Invoker
+
+Accept all other default values and click on Done.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Task 7: Redeploy the Frontend Service
+
+Execute these commands in Cloud shell:
+
+cd ..
+cd prod-frontend-billing
+
+gcloud builds submit --tag gcr.io/[PROJECT_ID]/frontend-prod:0.1
+gcloud run deploy --image gcr.io/[PROJECT_ID]/frontend-prod:0.1 --service-account frontend-service-sa
+
+*********************************************************************************************************************************
+
+NOTE :- For Service name (frontend-prod):, enter:< THE LAB GIVEN VALUES >
+If it is asking for the "you like to enable and retry (this will take a few minutes)?" prompt, press y and hit Enter
+If prompt for “you like to enable and retry (this will take a few minutes)? (y/N)?”, press  y and hit Enter
+If prompt for the region, select the option of us-central1
+If prompt for the "Allow unauthenticated invocations to [netflix-dataset-service] (y/N)?" prompt, press y and hit Enter.
+
+*********************************************************************************************************************************
+
+
