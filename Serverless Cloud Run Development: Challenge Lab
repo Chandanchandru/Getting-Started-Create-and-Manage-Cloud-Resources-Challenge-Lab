@@ -91,7 +91,7 @@ Task 4: Create a Billing Service Account
 
 Go to Navigation menu > IAM & Admin > Service accounts
 Click on Create Service account.
-Give name as: billing-service-sa
+Give name as: < THE LAB GIVEN VALUES >
 
 Accept all the default values and click on Done.
 
@@ -105,7 +105,7 @@ cd ..
 cd prod-api-billing
 
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/billing-prod-api:0.1
-gcloud run deploy --image gcr.io/[PROJECT_ID]/billing-prod-api:0.1 --service-account billing-service-sa
+gcloud run deploy --image gcr.io/[PROJECT_ID]/billing-prod-api:0.1 --service-account < THE LAB GIVEN VALUES >
 
 *********************************************************************************************************************************
 
@@ -137,7 +137,7 @@ Task 6: Frontend Service Account
 
 Go to Navigation menu > IAM & Admin > Service accounts
 Click on Create Service account.
-Give name as: frontend-service-sa
+Give name as: < THE LAB GIVEN VALUES >
 Give the Role: Cloud Run Invoker
 
 Accept all other default values and click on Done.
@@ -152,7 +152,7 @@ cd ..
 cd prod-frontend-billing
 
 gcloud builds submit --tag gcr.io/[PROJECT_ID]/frontend-prod:0.1
-gcloud run deploy --image gcr.io/[PROJECT_ID]/frontend-prod:0.1 --service-account frontend-service-sa
+gcloud run deploy --image gcr.io/[PROJECT_ID]/frontend-prod:0.1 --service-account < THE LAB GIVEN VALUES >
 
 *********************************************************************************************************************************
 
